@@ -2,20 +2,24 @@ import express from "express";
 import dotenv from "dotenv";
 import { initDB } from "./config/db.js"; 
 import rateLimiter from "./middleware/rateLimiter.js";
+import cors from 'cors';
 
 import transactionsRoute from "./routes/transactiosRoute.js";
+import job from "./config/cron.js";
 dotenv.config();
 
+// ✅ Define app first
 const app = express();
 
+// ✅ Use middleware after app is defined
+app.use(cors());
 app.use(rateLimiter);
 app.use(express.json());
+
 const PORT = process.env.PORT || 5001;
 
-
-//endpointss
+// ✅ Set up routes
 app.use("/api/transactions", transactionsRoute);
-
 
 console.log("my port:", process.env.PORT);
 
@@ -24,4 +28,3 @@ initDB().then(() => {
         console.log(`Server is running on port ${PORT}`);
     });
 });
-

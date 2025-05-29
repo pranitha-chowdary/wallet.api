@@ -6,13 +6,13 @@ const router = express.Router();
 
 
 
-router.get("/:user_id", getTransactionsByUserId);
-
-router.post("/", createTransaction);
-
-router.delete("/:id", deleteTransaction);
-
-
+// 🟢 Place specific routes first
 router.get("/summary/:user_id", getTransactionSummary);
 
+// 🔴 Put generic catch-all routes afterwards
+router.get("/:user_id", getTransactionsByUserId);
+router.post("/", createTransaction);
+router.delete("/:id", deleteTransaction);
+
+    
 export default router;  
