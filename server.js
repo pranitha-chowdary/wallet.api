@@ -11,12 +11,20 @@ dotenv.config();
 // ✅ Define app first
 const app = express();
 
+if(process.env.NODE_ENV==="production")job.start();
+
+
+
 // ✅ Use middleware after app is defined
 app.use(cors());
 app.use(rateLimiter);
 app.use(express.json());
 
 const PORT = process.env.PORT || 5001;
+
+app.get("/api/health", (req,res) =>{
+    res.status(200).json({status:"ok"})
+});
 
 // ✅ Set up routes
 app.use("/api/transactions", transactionsRoute);
